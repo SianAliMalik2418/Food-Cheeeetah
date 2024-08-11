@@ -34,7 +34,7 @@ export default function RootLayout({
             <NextTopLoader color="#FFBF00" />
             <Navbar />
             <div>{children}</div>
-            <Toaster richColors />
+            <Toaster visibleToasts={1} richColors theme="light" />
             <Footer />
           </ReactQueryProvider>
         </SessionWrapper>

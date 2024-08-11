@@ -21,3 +21,5 @@ export const SignUpSchema = z.object({
     .string()
     .min(6, { message: "Password must be atleast 6 characters long" }),
 });
+
+export type SignUpSchemaType = z.infer<typeof SignUpSchema>;

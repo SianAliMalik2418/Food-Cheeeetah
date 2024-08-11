@@ -1,6 +1,8 @@
 import { FaRegUser, FaHome } from "react-icons/fa";
 import { IoRestaurantOutline } from "react-icons/io5";
 import { LuChefHat } from "react-icons/lu";
+import { FiLogOut } from "react-icons/fi";
+import { signOut } from "next-auth/react";
 
 import {
   Sheet,
@@ -41,7 +43,7 @@ const ProfileButton = () => {
     <>
       <Sheet>
         <SheetTrigger>
-          <FaRegUser className={`border-none text-primary lg:hidden `} />
+          <FaRegUser className={`border-none text-primary lg:hidden`} />
         </SheetTrigger>
         <SheetContent side="left" className="w-[85%]">
           <div className="mt-4">
@@ -59,6 +61,10 @@ const ProfileButton = () => {
                 </Link>
               </SheetClose>
             ))}
+
+            <SheetClose asChild>
+              <LogoutButton />
+            </SheetClose>
           </div>
           <SheetDescription></SheetDescription>
         </SheetContent>

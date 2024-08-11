@@ -1,6 +1,6 @@
 "use client";
 
-import { SignUpSchema } from "@/schemas/SignUpSchema";
+import { SignUpSchema, SignUpSchemaType } from "@/schemas/SignUpSchema";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,17 +10,17 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "../ui/form";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import ButtonLoading from "../ui/ButtonLoading";
+} from "../../components/ui/form";
+import { Label } from "../../components/ui/label";
+import { Input } from "../../components/ui/input";
+import ButtonLoading from "../../components/ui/ButtonLoading";
 import Link from "next/link";
-import { useCreateMyUser } from "@/hooks/useCreateMyUser";
+import { useCreateMyUser } from "@/hooks/MyUserApi";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const SignUpForm = () => {
-  const form = useForm<z.infer<typeof SignUpSchema>>({
+  const form = useForm<SignUpSchemaType>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
       username: "",
@@ -29,27 +29,19 @@ const SignUpForm = () => {
     },
   });
 
-  const { signUpUser, isLoading, isError, isSuccess } = useCreateMyUser();
+  const { signUpUser, isLoading } = useCreateMyUser();
   const router = useRouter();
 
-  const handleSignUp = async (data: z.infer<typeof SignUpSchema>) => {
+  const handleSignUp = async (data: SignUpSchemaType) => {
     const resp = await signUpUser(data);
     router.push("/login");
   };
 
-  if (isError) {
-    toast.error("Something went wrong");
-  }
-
-  if (isSuccess) {
-    toast.success("User registered!");
-  }
-
   return (
-    <div className="flex flex-col w-full md:w-[33%]  items-center justify-center gap-3">
+    <div className="flex w-full flex-col items-center justify-center gap-3 md:w-[33%]">
       <Form {...form}>
         <form
-          className=" flex flex-col gap-5 text-xl w-full"
+          className="flex w-full flex-col gap-5 text-xl"
           onSubmit={form.handleSubmit(handleSignUp)}
         >
           <FormField

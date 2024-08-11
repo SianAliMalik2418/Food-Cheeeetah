@@ -1,7 +1,7 @@
 "use client";
 
 import { LoginSchema } from "@/schemas/LoginSchema";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,16 +11,19 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "../ui/form";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import ButtonLoading from "../ui/ButtonLoading";
+} from "../../components/ui/form";
+import { Label } from "../../components/ui/label";
+import { Input } from "../../components/ui/input";
+import ButtonLoading from "../../components/ui/ButtonLoading";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useMutation } from "react-query";
 
 const LoginForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -33,6 +36,7 @@ const LoginForm = () => {
 
   const handleLogin = async (data: z.infer<typeof LoginSchema>) => {
     try {
+      setIsLoading(true);
       const resp = await signIn("credentials", {
         redirect: false,
         email: data.email,
@@ -41,17 +45,19 @@ const LoginForm = () => {
 
       if (resp && resp?.status === 401) {
         return toast.error("Invalid Credentials!");
+        setIsLoading(false);
       }
 
       if (resp && resp?.status === 200) {
         toast.success("Logged in successfully 🎊");
+
         router.replace("/");
         router.refresh();
+        setIsLoading(false);
       }
-
-      console.log(resp);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -60,7 +66,7 @@ const LoginForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleLogin)}
-          className=" flex flex-col gap-5 text-xl w-full md:w-[33%]"
+          className="flex w-full flex-col gap-5 text-xl md:w-[33%]"
         >
           <FormField
             control={form.control}
@@ -88,7 +94,7 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-          <ButtonLoading>Login</ButtonLoading>
+          <ButtonLoading isLoading={isLoading}>Login</ButtonLoading>
         </form>
       </Form>
       <p>

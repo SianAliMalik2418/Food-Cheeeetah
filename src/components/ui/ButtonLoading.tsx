@@ -5,11 +5,16 @@ import { Loader2 } from "lucide-react";
 type ButtonLoadingProps = {
   children: string;
   isLoading?: boolean;
+  className?: string;
 };
 
-const ButtonLoading = ({ children, isLoading = false }: ButtonLoadingProps) => {
+const ButtonLoading = ({
+  children,
+  isLoading = false,
+  className,
+}: ButtonLoadingProps) => {
   return (
-    <div className="w-full">
+    <div className={className}>
       {isLoading ? (
         <Button disabled className="w-full">
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
