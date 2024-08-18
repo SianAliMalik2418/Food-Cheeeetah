@@ -35,7 +35,7 @@ const ProfileButton = () => {
     {
       label: "My Restaurant",
       icon: <LuChefHat />,
-      href: "/myRestaurant",
+      href: "/restaurant/my-restaurant",
     },
   ];
 

@@ -52,7 +52,7 @@ const DropDownProfileButton = ({ email }: { email: string }) => {
           </DropdownMenuItem>
           <DropdownMenuItem>
             {" "}
-            <Link href={"/myRestaurant"}>
+            <Link href={"/restaurant/my-restaurant"}>
               <span className="flex items-center gap-3">
                 <LuChefHat />
                 <span>My Restaurant</span>

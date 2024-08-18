@@ -61,7 +61,9 @@ export const useGetMyUser = () => {
     data: currentUser,
     isLoading,
     error,
-  } = useQuery(["user-profile"], getUserRequest);
+  } = useQuery(["user-profile"], getUserRequest, {
+    enabled: !!session?.user.id,
+  });
 
   return { currentUser, isLoading, error };
 };

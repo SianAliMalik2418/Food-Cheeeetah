@@ -22,7 +22,7 @@ import { useEffect } from "react";
 import UserProfileFormSkeleton from "@/components/Skeletons/UserProfileFormSkeleton";
 
 const ProfileForm = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const userId = session?.user.id;
 
   const { updateMyUserProfile, isLoading: isUpdatingLoading } =
@@ -48,7 +48,7 @@ const ProfileForm = () => {
     }
   }, [form, currentUser]);
 
-  if (isGettingProfileLoading) {
+  if (isGettingProfileLoading || status === "loading") {
     return <UserProfileFormSkeleton />;
   }
   if (error) {

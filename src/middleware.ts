@@ -16,11 +16,15 @@ export const middleware = async (request: NextRequest) => {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  if (pathName.startsWith("/profile") && !token) {
+  if (
+    (pathName.startsWith("/profile") ||
+      pathName === "/restaurant/my-restaurant") &&
+    !token
+  ) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 };
 
 export const config = {
-  matcher: ["/", "/login", "/signup", "/profile/:path*"],
+  matcher: ["/", "/login", "/signup", "/profile/:path*", "/restaurant/:path*"],
 };

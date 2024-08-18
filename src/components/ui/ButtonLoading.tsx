@@ -1,12 +1,12 @@
 import React from "react";
-import { Button } from "./button";
+import { Button, ButtonProps } from "./button";
 import { Loader2 } from "lucide-react";
 
-type ButtonLoadingProps = {
+interface ButtonLoadingProps extends ButtonProps {
   children: string;
   isLoading?: boolean;
   className?: string;
-};
+}
 
 const ButtonLoading = ({
   children,
