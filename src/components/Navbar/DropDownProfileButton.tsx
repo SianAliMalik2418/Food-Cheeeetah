@@ -41,15 +41,7 @@ const DropDownProfileButton = ({ email }: { email: string }) => {
               </span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            {" "}
-            <Link href={"/restaurants"}>
-              <span className="flex items-center gap-3">
-                <IoRestaurantOutline />
-                <span>Restaurants</span>
-              </span>
-            </Link>
-          </DropdownMenuItem>
+
           <DropdownMenuItem>
             {" "}
             <Link href={"/restaurant/my-restaurant"}>

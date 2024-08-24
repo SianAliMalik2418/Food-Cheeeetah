@@ -21,9 +21,3 @@ export const CUISINES_ITEMS = [
   "Organic",
   "Healthy Food",
 ];
-
-export const SORT_OPTIONS = [
-  "Relevance",
-  "Fastest Delivery Time",
-  "Delivery Price",
-];

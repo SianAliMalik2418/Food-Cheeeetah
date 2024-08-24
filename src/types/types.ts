@@ -22,3 +22,12 @@ export type RestaurantType = {
     menuItemPrice: number;
   }[];
 };
+
+export type SearchRestaurantResponseType = {
+  data: RestaurantType[];
+  pagination: {
+    totalDocuments: number;
+    page: number;
+    pageSize: number;
+  };
+};

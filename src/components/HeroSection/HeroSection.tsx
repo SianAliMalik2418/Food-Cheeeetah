@@ -1,8 +1,9 @@
 import Image from "next/image";
 // import heroImg from "@/../../public/NEW_CHEETAH_EATING.png";
 import heroImg from "@/../../public/Cheetah eating.jpeg";
-import HeroSectionInput from "./HeroSectionInput";
 import About from "../About/About";
+
+import HeroSectionSearch from "./HeroSectionSearch";
 
 const HeroSection = () => {
   return (
@@ -13,7 +14,7 @@ const HeroSection = () => {
             It&apos;s the food and groceries you love, delivered
           </span>
           <div className="z-10 mt-5 hidden lg:block">
-            <HeroSectionInput />
+            <HeroSectionSearch />
           </div>
         </div>
         <div className="image relative flex h-[16rem] flex-1 items-center justify-center px-3 lg:h-[30rem] xl:h-[35rem]">
@@ -27,8 +28,8 @@ const HeroSection = () => {
           />
         </div>
       </div>
-      <div className="z-10 -mt-20 lg:hidden">
-        <HeroSectionInput />
+      <div className="z-10 mx-5 -mt-14 lg:hidden">
+        <HeroSectionSearch />
       </div>
       <About />
     </div>

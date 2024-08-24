@@ -3,6 +3,7 @@ import "./globals.css";
 
 import { Toaster } from "../components/ui/sonner";
 import NextTopLoader from "nextjs-toploader";
+
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import ReactQueryProvider from "@/context/ReactQueryProvider";

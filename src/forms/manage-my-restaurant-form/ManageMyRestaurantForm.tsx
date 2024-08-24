@@ -21,6 +21,7 @@ import {
 import ButtonLoading from "@/components/ui/ButtonLoading";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
+import Loader from "@/components/ui/Loader";
 
 function ManageMyRestaurantForm() {
   const { data: session, status } = useSession();
@@ -72,11 +73,7 @@ function ManageMyRestaurantForm() {
   }, [form, restaurant, isGetRestaurantLoading]);
 
   if (isGetRestaurantLoading || status === "loading") {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader2 className="mr-2 h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
+    return <Loader />;
   }
 
   return (

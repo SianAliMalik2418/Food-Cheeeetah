@@ -27,6 +27,7 @@
     "next-auth": "^4.24.7",
     "next-cloudinary": "^6.10.0",
     "next-themes": "^0.3.0",
+    "nextjs-progressbar": "^0.0.16",
     "nextjs-toploader": "^1.6.12",
     "react": "^18",
     "react-dom": "^18",
