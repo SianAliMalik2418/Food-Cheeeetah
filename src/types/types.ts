@@ -7,6 +7,12 @@ export type User = {
   addressLine1: string;
 };
 
+export type MenuItemType = {
+  _id: string;
+  menuItemName: string;
+  menuItemPrice: number;
+};
+
 export type RestaurantType = {
   _id: string;
   userId: string;
@@ -17,10 +23,7 @@ export type RestaurantType = {
   deliveryPrice: number;
   coverImage: string;
   cuisines: [string, ...string[]];
-  menuItems: {
-    menuItemName: string;
-    menuItemPrice: number;
-  }[];
+  menuItems: MenuItemType[];
 };
 
 export type SearchRestaurantResponseType = {

@@ -15,7 +15,7 @@ const Navbar = async () => {
   const email = session?.user?.email;
 
   return (
-    <div className="mx-auto flex h-20 items-center justify-between  px-10 py-3 shadow-lg md:container">
+    <div className="sticky top-0 z-10 mx-auto flex h-20 items-center justify-between bg-white px-10 py-3 shadow-md md:container">
       {session ? (
         <>
           <div className="block flex-1 lg:hidden">
@@ -41,12 +41,12 @@ const Navbar = async () => {
           <div className="hidden items-center justify-center gap-8 lg:flex">
             <DropDownProfileButton email={email as string} />
             <IoBagHandleOutline
-              className="text-primary lg:text-2xl "
+              className="text-primary lg:text-2xl"
               cursor={"pointer"}
             />
           </div>
 
-          <div className="flex flex-1 items-end justify-end  lg:hidden">
+          <div className="flex flex-1 items-end justify-end lg:hidden">
             <IoBagHandleOutline
               className="text-primary lg:text-2xl"
               cursor={"pointer"}

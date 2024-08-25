@@ -1,5 +1,5 @@
 import { SearchStateType } from "@/app/(pages)/search/[city]/page";
-import { SearchRestaurantResponseType } from "@/types/types";
+import { RestaurantType, SearchRestaurantResponseType } from "@/types/types";
 import axios from "axios";
 import { useQuery } from "react-query";
 
@@ -34,4 +34,30 @@ export const useSearchRestaurants = (
   );
 
   return { searchResults, isLoading };
+};
+
+export const useGetSingleRestaurant = (restaurantId: string) => {
+  const getRestaurantByIdRequest = async (): Promise<RestaurantType> => {
+    try {
+      const response = await axios.get(
+        `/api/restaurant/details?restaurantId=${restaurantId}`,
+      );
+
+      console.log(response);
+      return response?.data?.restaurant;
+    } catch (error) {
+      console.log(error);
+      throw new Error();
+    }
+  };
+
+  const { data: restaurant, isLoading } = useQuery(
+    ["getRestaurantById"],
+    getRestaurantByIdRequest,
+    {
+      enabled: !!restaurantId,
+    },
+  );
+
+  return { restaurant, isLoading };
 };

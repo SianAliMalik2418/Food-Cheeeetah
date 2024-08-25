@@ -69,7 +69,7 @@ const SearchPage = ({ params }: { params: { city: string } }) => {
   return (
     <div className="mx-auto flex min-h-screen flex-col items-center gap-10 px-3 py-14 lg:flex-row lg:items-start lg:px-5">
       {/* Cuisines List */}
-      <div className="sticky top-10 w-full lg:w-[25%]">
+      <div className="static w-full md:sticky md:top-10 lg:w-[25%]">
         <CuisinesFilter
           onCuisineChange={handleSelectedCuisines}
           selectedCuisines={searchState.selectedCuisines}
@@ -99,7 +99,7 @@ const SearchPage = ({ params }: { params: { city: string } }) => {
           searchResults?.data && (
             <div className="flex w-full flex-col items-start">
               {/* Header part */}
-              <div className="mt-3 flex w-full flex-col items-center justify-between gap-3 lg:mt-0 lg:flex-row">
+              <div className="mY-3 flex w-full flex-col items-center justify-between gap-3 lg:mt-0 lg:flex-row">
                 <div className="flex items-center justify-center">
                   <span className="text-xl font-bold md:text-2xl">
                     {searchResults?.pagination.totalDocuments} restaurants found
