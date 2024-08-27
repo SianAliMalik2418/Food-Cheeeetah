@@ -53,7 +53,6 @@ function ManageMyRestaurantForm() {
 
   // Submitting form
   const handleCreateRestaurant = (restaurantData: RestaurantSchemaType) => {
-    console.log(restaurantData);
     isEditingRestaurant
       ? updateMyRestaurant({
           ...restaurantData,

@@ -1,3 +1,5 @@
+import { CartItemType } from "@/app/(pages)/details/[restaurantId]/page";
+
 export type User = {
   _id: string;
   email: string;
@@ -8,7 +10,7 @@ export type User = {
 };
 
 export type MenuItemType = {
-  _id: string;
+  _id?: string;
   menuItemName: string;
   menuItemPrice: number;
 };
@@ -33,4 +35,41 @@ export type SearchRestaurantResponseType = {
     page: number;
     pageSize: number;
   };
+};
+
+export type OrderDetailsType = {
+  restaurant: string;
+  user: string;
+  deliveryDetails: {
+    email: string;
+    username: string;
+    addressLine1: string;
+    city: string;
+  };
+  cartItems: CartItemType[];
+  totalAmount: number;
+  status: "placed" | "paid" | "inProgress" | "outForDelivery" | "delivered";
+};
+
+export type OrderStatusType =
+  | "placed"
+  | "paid"
+  | "inProgress"
+  | "outForDelivery"
+  | "delivered";
+
+export type OrderStatusApiResponseType = {
+  _id: string;
+  restaurant: RestaurantType;
+  user: User;
+  deliveryDetails: {
+    email: string;
+    username: string;
+    addressLine1: string;
+    city: string;
+  };
+  cartItems: CartItemType[];
+  totalAmount: number;
+  status: OrderStatusType;
+  createdAt: Date;
 };

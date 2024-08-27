@@ -17,7 +17,6 @@ export const useCreateMyRestaurant = () => {
 
     try {
       const response = await axios.post(`/api/my-restaurant`, payLoad);
-      console.log(response);
       return response?.data?.restaurant;
     } catch (error) {
       console.log(error);

@@ -1,18 +1,23 @@
 "use client";
 
+import CheckoutButton from "@/components/Details/CheckoutButton";
 import MenuItem from "@/components/Details/MenuItem";
 import OrderSummary from "@/components/Details/OrderSummary";
 import RestaurantInfo from "@/components/Details/RestaurantInfo";
+import DetailsPageSkeleton from "@/components/Skeletons/DetailsPageSkeleton";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Card } from "@/components/ui/card";
+import { Card, CardFooter } from "@/components/ui/card";
+import { usePlaceOrder } from "@/hooks/OrderApi";
 import { useGetSingleRestaurant } from "@/hooks/RestaurantApi";
-import { MenuItemType } from "@/types/types";
+import { UserProfileSchemaType } from "@/schemas/UserProfileSchema";
+import { MenuItemType, OrderDetailsType } from "@/types/types";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
 export type CartItemType = {
-  _id: string;
+  _id?: string;
   menuItemName: string;
   menuItemPrice: number;
   quantity: number;
@@ -23,12 +28,25 @@ const RestaurantDetailPage = ({
 }: {
   params: { restaurantId: string };
 }) => {
+  const { data: session } = useSession();
+  const userId = session?.user.id;
+
   const restaurantId = params.restaurantId;
 
   const { restaurant, isLoading } = useGetSingleRestaurant(restaurantId);
 
-  const [cartItems, setCartItems] = useState<CartItemType[]>([]);
+  const [cartItems, setCartItems] = useState<CartItemType[]>(() => {
+    const storedCartItemsInSessionStorage = sessionStorage.getItem(
+      `cartItems-${restaurantId}`,
+    );
+    return storedCartItemsInSessionStorage
+      ? JSON.parse(storedCartItemsInSessionStorage)
+      : [];
+  });
 
+  const { isLoading: isPlacingOrderLoading, placeOrder } = usePlaceOrder();
+
+  // Cart functionality.
   const handleAddToCart = (menuItem: MenuItemType) => {
     setCartItems((prev) => {
       //  1. Check if clicked item is already in the cart
@@ -61,6 +79,12 @@ const RestaurantDetailPage = ({
       }
 
       toast.success("Added to cart");
+
+      sessionStorage.setItem(
+        `cartItems-${restaurantId}`,
+        JSON.stringify(updatedCartItems),
+      );
+
       return updatedCartItems;
     });
   };
@@ -72,6 +96,11 @@ const RestaurantDetailPage = ({
       );
 
       toast.warning(`${cartItem.menuItemName} removed from cart`);
+
+      sessionStorage.setItem(
+        `cartItems-${restaurantId}`,
+        JSON.stringify(updatedCartItems),
+      );
 
       return updatedCartItems;
     });
@@ -90,13 +119,51 @@ const RestaurantDetailPage = ({
           : prevCartItem,
       );
 
+      sessionStorage.setItem(
+        `cartItems-${restaurantId}`,
+        JSON.stringify(updatedCartItems),
+      );
       return updatedCartItems;
     });
   };
 
   if (isLoading || !restaurant) {
-    return "Loading...";
+    return <DetailsPageSkeleton />;
   }
+
+  if (!restaurant && !isLoading) {
+    return "Something went wrong while trying to fetch details of restaurant. Please try again later!";
+  }
+
+  const getTotalCost = () => {
+    const totalPriceOfMenuItems = cartItems.reduce(
+      (total, cartItem) => total + cartItem.menuItemPrice * cartItem.quantity,
+      0,
+    );
+
+    const totalPriceOfMenuItemsWithDeliveryPrice =
+      totalPriceOfMenuItems + restaurant.deliveryPrice;
+
+    return totalPriceOfMenuItemsWithDeliveryPrice;
+  };
+
+  const handleCheckOut = (data: UserProfileSchemaType) => {
+    const orderDetails: OrderDetailsType = {
+      restaurant: restaurant?._id,
+      user: userId as string,
+      deliveryDetails: {
+        email: data.email as string,
+        username: data.username,
+        addressLine1: data.addressLine1,
+        city: restaurant.city,
+      },
+      cartItems: cartItems,
+      status: "placed",
+      totalAmount: getTotalCost(),
+    };
+
+    placeOrder(orderDetails);
+  };
 
   return (
     <div className="flex flex-col gap-10 p-5">
@@ -130,7 +197,16 @@ const RestaurantDetailPage = ({
               handleDeleteButtonCart={handleDeleteButtonCart}
               addToCart={handleAddToCart}
               handleRemoveFromCart={handleRemoveFromCart}
+              getTotalCost={getTotalCost}
             />
+
+            <CardFooter>
+              <CheckoutButton
+                handleCheckOut={handleCheckOut}
+                disabled={cartItems.length === 0}
+                isPlacingOrderLoading={isPlacingOrderLoading}
+              />
+            </CardFooter>
           </Card>
         </div>
       </div>

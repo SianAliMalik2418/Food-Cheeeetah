@@ -1,3 +1,4 @@
+import { OrderStatusType } from "@/types/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -20,4 +21,22 @@ export const CUISINES_ITEMS = [
   "Chineese",
   "Organic",
   "Healthy Food",
+];
+
+type OrderStatusInfo = {
+  label: string;
+  value: OrderStatusType;
+  progressValue: number;
+};
+
+export const ORDER_STATUS: OrderStatusInfo[] = [
+  { label: "Placed", value: "placed", progressValue: 5 },
+  {
+    label: "Awaiting Restaurant Confirmation",
+    value: "paid",
+    progressValue: 25,
+  },
+  { label: "In Progress", value: "inProgress", progressValue: 50 },
+  { label: "Out for Delivery", value: "outForDelivery", progressValue: 75 },
+  { label: "Delivered", value: "delivered", progressValue: 100 },
 ];

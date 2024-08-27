@@ -9,7 +9,6 @@ export const PUT = async (
   const { userId } = params;
   const reqBody = await req.json();
   const { username, city, country, addressLine1 } = reqBody;
-  console.log(country, addressLine1);
 
   try {
     await connectDB();

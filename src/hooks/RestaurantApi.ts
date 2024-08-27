@@ -17,7 +17,6 @@ export const useSearchRestaurants = (
       const response = await axios<SearchRestaurantResponseType>(
         `/api/restaurant/search/${city}?${params}`,
       );
-      console.log(response);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -43,7 +42,6 @@ export const useGetSingleRestaurant = (restaurantId: string) => {
         `/api/restaurant/details?restaurantId=${restaurantId}`,
       );
 
-      console.log(response);
       return response?.data?.restaurant;
     } catch (error) {
       console.log(error);

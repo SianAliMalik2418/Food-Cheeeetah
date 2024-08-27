@@ -1,8 +1,7 @@
 import { FaRegUser, FaHome } from "react-icons/fa";
 import { IoRestaurantOutline } from "react-icons/io5";
 import { LuChefHat } from "react-icons/lu";
-import { FiLogOut } from "react-icons/fi";
-import { signOut } from "next-auth/react";
+import { IoFastFoodOutline } from "react-icons/io5";
 
 import {
   Sheet,
@@ -28,9 +27,9 @@ const ProfileButton = () => {
       href: "/profile",
     },
     {
-      label: "Restaurants",
-      icon: <IoRestaurantOutline />,
-      href: "/restaurants",
+      label: "Order Status",
+      icon: <IoFastFoodOutline />,
+      href: "/order-status",
     },
     {
       label: "My Restaurant",

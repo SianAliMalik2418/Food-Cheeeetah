@@ -12,6 +12,7 @@ type OrderSummaryProps = {
   handleDeleteButtonCart: (cartItem: CartItemType) => void;
   addToCart: (menuItem: MenuItemType) => void;
   handleRemoveFromCart: (menuItem: MenuItemType) => void;
+  getTotalCost: () => number;
 };
 
 const OrderSummary = ({
@@ -20,19 +21,8 @@ const OrderSummary = ({
   handleDeleteButtonCart,
   addToCart,
   handleRemoveFromCart,
+  getTotalCost,
 }: OrderSummaryProps) => {
-  const getTotalCost = () => {
-    const totalPriceOfMenuItems = cartItems.reduce(
-      (total, cartItem) => total + cartItem.menuItemPrice * cartItem.quantity,
-      0,
-    );
-
-    const totalPriceOfMenuItemsWithDeliveryPrice =
-      totalPriceOfMenuItems + restaurant.deliveryPrice;
-
-    return totalPriceOfMenuItemsWithDeliveryPrice;
-  };
-
   return (
     <>
       <CardHeader>

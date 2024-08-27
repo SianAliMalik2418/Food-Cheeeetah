@@ -4,14 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (request: NextRequest) => {
   const restaurantId = request.nextUrl.searchParams.get("restaurantId");
-  console.log(request.nextUrl);
 
   try {
     await connectDB();
 
     const restaurant = await RestaurantModel.findById(restaurantId);
-
-    console.log(restaurant);
 
     if (!restaurant) {
       return NextResponse.json(

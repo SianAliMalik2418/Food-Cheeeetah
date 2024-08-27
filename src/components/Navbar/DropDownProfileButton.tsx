@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { FaHome, FaRegUser } from "react-icons/fa";
-import { IoRestaurantOutline } from "react-icons/io5";
+import { IoFastFoodOutline } from "react-icons/io5";
 import { LuChefHat } from "react-icons/lu";
 
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -48,6 +48,15 @@ const DropDownProfileButton = ({ email }: { email: string }) => {
               <span className="flex items-center gap-3">
                 <LuChefHat />
                 <span>My Restaurant</span>
+              </span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            {" "}
+            <Link href={"/order-status"}>
+              <span className="flex items-center gap-3">
+                <IoFastFoodOutline />
+                <span>Order status</span>
               </span>
             </Link>
           </DropdownMenuItem>

@@ -81,7 +81,6 @@ export const useUpdateMyUserProfile = () => {
         `/api/my-user/profile/${userId}`,
         userDetails,
       );
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

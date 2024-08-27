@@ -6,18 +6,6 @@ import { MdOutlineDeliveryDining } from "react-icons/md";
 import PlaceHolderRestaurantImage from "../../../public/placeholder-restaurant.png";
 
 const SearchResultCard = ({ restaurant }: { restaurant: RestaurantType }) => {
-  // _id: new ObjectId('66835a173fcd766da4937d8a'),
-  //   userId: new ObjectId('6680be2bd3a88a9a135eddc9'),
-  //   restaurantName: 'Sheikh Chilli ',
-  //   country: 'Pakistan',
-  //   city: 'Lahore',
-  //   coverImg: 'https://res.cloudinary.com/x-clone/image/upload/v1719884281/pj1iorlxeib9j7g3tdij.jpg',
-  //   deliveryTime: 40,
-  //   deliveryPrice: 50,
-  //   cuisines: [ 'BBQ', 'Desi', 'Steakhouse', 'Healthy Food' ],
-  //   menuItems: [ [Object], [Object], [Object] ],
-  //   __v: 0
-
   return (
     <Link
       href={`/details/${restaurant._id}`}

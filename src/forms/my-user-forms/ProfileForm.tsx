@@ -17,16 +17,20 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import ButtonLoading from "../../components/ui/ButtonLoading";
 import { useGetMyUser, useUpdateMyUserProfile } from "@/hooks/MyUserApi";
-import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import UserProfileFormSkeleton from "@/components/Skeletons/UserProfileFormSkeleton";
 
-const ProfileForm = () => {
-  const { data: session, status } = useSession();
-  const userId = session?.user.id;
+type ProfileFormProps = {
+  onSubmitAction: (data: UserProfileSchemaType) => void;
+  buttonText?: string;
+  isLoading?: boolean;
+};
 
-  const { updateMyUserProfile, isLoading: isUpdatingLoading } =
-    useUpdateMyUserProfile();
+const ProfileForm = ({
+  onSubmitAction,
+  buttonText = "Save changes",
+  isLoading,
+}: ProfileFormProps) => {
   const {
     currentUser,
     isLoading: isGettingProfileLoading,
@@ -38,38 +42,61 @@ const ProfileForm = () => {
     defaultValues: currentUser,
   });
 
-  const handleProfileUpdate = async (data: UserProfileSchemaType) => {
-    await updateMyUserProfile({ userDetails: data, userId: userId as string });
-  };
-
   useEffect(() => {
     if (currentUser) {
       form.reset(currentUser);
     }
   }, [form, currentUser]);
 
-  if (isGettingProfileLoading || status === "loading") {
+  if (isGettingProfileLoading) {
     return <UserProfileFormSkeleton />;
   }
+
   if (error) {
     return <span>Unable to load profile</span>;
   }
 
   return (
-    <>
-      <Form {...form}>
-        <form
-          className="flex w-full flex-col gap-3 p-2"
-          onSubmit={form.handleSubmit(handleProfileUpdate)}
-        >
+    <Form {...form}>
+      <form
+        className="flex w-full flex-col gap-3 p-2"
+        onSubmit={form.handleSubmit(onSubmitAction)}
+      >
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="w-full md:w-1/2">
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input {...field} disabled className="bg-zinc-300" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem className="w-full md:w-1/2">
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="flex w-full flex-col gap-4 md:flex-row">
           <FormField
             control={form.control}
-            name="email"
+            name="city"
             render={({ field }) => (
-              <FormItem className="w-full md:w-1/2">
-                <FormLabel>Email</FormLabel>
+              <FormItem className="flex-1">
+                <FormLabel>City</FormLabel>
                 <FormControl>
-                  <Input {...field} disabled className="bg-zinc-300" />
+                  <Input {...field} placeholder="Enter city name..." />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -77,65 +104,36 @@ const ProfileForm = () => {
           />
           <FormField
             control={form.control}
-            name="username"
+            name="country"
             render={({ field }) => (
-              <FormItem className="w-full md:w-1/2">
-                <FormLabel>Username</FormLabel>
+              <FormItem className="flex-1">
+                <FormLabel>Country</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input placeholder="Enter country name..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div className="flex w-full flex-col gap-4 md:flex-row">
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel>City</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Enter city name..." />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="country"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel>Country</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Entery country name..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="addressLine1"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormLabel>Address Line 1</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Entery adress line 1..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <ButtonLoading isLoading={isUpdatingLoading} className="mt-4 w-fit">
-            Save Changes
-          </ButtonLoading>
-        </form>
-      </Form>
-    </>
+          <FormField
+            control={form.control}
+            name="addressLine1"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Address Line 1</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter address line 1..." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <ButtonLoading isLoading={isLoading} className="mt-4 w-fit">
+          {buttonText}
+        </ButtonLoading>
+      </form>
+    </Form>
   );
 };
 
