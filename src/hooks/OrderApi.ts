@@ -40,6 +40,7 @@ export const useGetMyOrders = (userId: string) => {
     getMyOrdersRequest,
     {
       enabled: !!userId,
+      refetchInterval: 5000,
     },
   );
 

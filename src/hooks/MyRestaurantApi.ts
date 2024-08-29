@@ -1,7 +1,11 @@
 "use client";
 
 import { RestaurantSchemaType } from "@/schemas/RestaurantSchema";
-import { RestaurantType } from "@/types/types";
+import {
+  OrderStatusApiResponseType,
+  OrderStatusType,
+  RestaurantType,
+} from "@/types/types";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useMutation, useQuery } from "react-query";
@@ -105,4 +109,76 @@ export const useUpdateMyRestaurant = () => {
   }
 
   return { updateMyRestaurant, isLoading };
+};
+
+export const useGetMyRestaurantOrders = (restaurantId: string) => {
+  const getMyRestaurantOrdersRequest = async (): Promise<
+    OrderStatusApiResponseType[]
+  > => {
+    try {
+      const response = await axios(
+        `/api/my-restaurant/order?restaurantId=${restaurantId}`,
+      );
+      console.log(response);
+
+      return response.data.orders;
+    } catch (error) {
+      console.log(error);
+      throw new Error();
+    }
+  };
+
+  const { data: orders, isLoading } = useQuery(
+    "fetchMyRestaurantOrders",
+    getMyRestaurantOrdersRequest,
+    {
+      enabled: !!restaurantId,
+    },
+  );
+
+  return { orders, isLoading };
+};
+
+type updateMyRestaurantOrderRequestType = {
+  orderId: string;
+  userId: string;
+  orderStatus: OrderStatusType;
+};
+
+export const useUpdateMyRestaurantOrderStatus = () => {
+  const updateMyRestaurantOrderRequest = async ({
+    orderId,
+    userId,
+    orderStatus,
+  }: updateMyRestaurantOrderRequestType) => {
+    try {
+      const response = await axios.patch(
+        `/api/my-restaurant/order/status?orderId=${orderId}&userId=${userId}`,
+        orderStatus,
+      );
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const {
+    mutateAsync: changeOrderStatus,
+    isLoading,
+    isError,
+    reset,
+    isSuccess,
+  } = useMutation(["updateOrderStatus"], updateMyRestaurantOrderRequest);
+
+  if (isSuccess) {
+    toast.success("Order status updated!");
+  }
+
+  if (isError) {
+    toast.error("Error while changing order status.");
+    reset();
+  }
+
+  return { changeOrderStatus, isLoading };
 };

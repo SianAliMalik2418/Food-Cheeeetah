@@ -13,6 +13,7 @@ import { UserProfileSchemaType } from "@/schemas/UserProfileSchema";
 import { MenuItemType, OrderDetailsType } from "@/types/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -30,6 +31,8 @@ const RestaurantDetailPage = ({
 }) => {
   const { data: session } = useSession();
   const userId = session?.user.id;
+
+  const router = useRouter();
 
   const restaurantId = params.restaurantId;
 
@@ -163,6 +166,8 @@ const RestaurantDetailPage = ({
     };
 
     placeOrder(orderDetails);
+
+    router.push(`/order-status`);
   };
 
   return (
@@ -205,6 +210,7 @@ const RestaurantDetailPage = ({
                 handleCheckOut={handleCheckOut}
                 disabled={cartItems.length === 0}
                 isPlacingOrderLoading={isPlacingOrderLoading}
+                isAuthenticated={!!userId}
               />
             </CardFooter>
           </Card>

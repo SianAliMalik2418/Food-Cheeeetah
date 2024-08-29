@@ -15,22 +15,27 @@ import MenuSection from "./MenuSection";
 import ImageSection from "./ImageSection";
 import {
   useCreateMyRestaurant,
-  useGetMyRestaurant,
   useUpdateMyRestaurant,
 } from "@/hooks/MyRestaurantApi";
 import ButtonLoading from "@/components/ui/ButtonLoading";
 import { useSession } from "next-auth/react";
-import { Loader2 } from "lucide-react";
 import Loader from "@/components/ui/Loader";
+import { RestaurantType } from "@/types/types";
 
-function ManageMyRestaurantForm() {
+type ManageMyRestaurantFormPropsType = {
+  restaurant: RestaurantType;
+  isGetRestaurantLoading: boolean;
+};
+
+function ManageMyRestaurantForm({
+  restaurant,
+  isGetRestaurantLoading,
+}: ManageMyRestaurantFormPropsType) {
   const { data: session, status } = useSession();
 
   // Importing stuff from custom hooks.
   const { createMyRestaurant, isLoading: isCreateRestaurantLoading } =
     useCreateMyRestaurant();
-  const { restaurant, isLoading: isGetRestaurantLoading } =
-    useGetMyRestaurant();
 
   const { updateMyRestaurant, isLoading: isUpdatingRestaurantLoading } =
     useUpdateMyRestaurant();
@@ -78,7 +83,7 @@ function ManageMyRestaurantForm() {
   return (
     <Form {...form}>
       <form
-        className="my-5 w-[90%] space-y-10 rounded-lg bg-gray-50 px-4 py-10 md:p-10"
+        className="my-5 w-full space-y-10 rounded-lg bg-gray-50 px-4 py-10 md:p-10"
         onSubmit={form.handleSubmit(handleCreateRestaurant)}
       >
         <DetailsSection />

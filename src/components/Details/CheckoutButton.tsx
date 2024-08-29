@@ -9,26 +9,31 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { UserProfileSchemaType } from "@/schemas/UserProfileSchema";
-import { usePlaceOrder } from "@/hooks/OrderApi";
-import { OrderDetailsType } from "@/types/types";
+import Link from "next/link";
 
 type CheckOutButtonProps = {
   handleCheckOut: (data: UserProfileSchemaType) => void;
   disabled: boolean;
   isPlacingOrderLoading: boolean;
+  isAuthenticated: boolean | undefined;
 };
 
 const CheckoutButton = ({
   handleCheckOut,
   disabled,
   isPlacingOrderLoading,
+  isAuthenticated,
 }: CheckOutButtonProps) => {
   return (
     <div className="w-full">
       <Dialog>
         <DialogTrigger asChild>
           <Button disabled={disabled} className="w-full">
-            Go to Checkout
+            {isAuthenticated ? (
+              "Go to Checkout"
+            ) : (
+              <Link href={"/login"}>Login to continue</Link>
+            )}
           </Button>
         </DialogTrigger>
 
