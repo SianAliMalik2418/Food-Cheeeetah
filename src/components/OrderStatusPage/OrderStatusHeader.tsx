@@ -10,17 +10,22 @@ const OrderStatusHeader = ({ order }: OrderStatusCardProps) => {
   const expectedDeliveryTime = () => {
     const orderCreationTime = new Date(order.createdAt);
 
+    // Add the estimated delivery time to the order creation time
     orderCreationTime.setMinutes(
       orderCreationTime.getMinutes() + order.restaurant.estimatedDeliveryTime,
     );
 
+    let hours = orderCreationTime.getHours();
     const minutes = orderCreationTime.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
 
-    const hours = orderCreationTime.getHours();
+    // Convert 24-hour time to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
 
     const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
-    return `${hours}:${paddedMinutes}`;
+    return `${hours}:${paddedMinutes} ${ampm}`;
   };
 
   const getOrderStatusInfo = () => {

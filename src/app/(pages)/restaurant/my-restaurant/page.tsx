@@ -24,6 +24,8 @@ function MyRestaurantPage() {
     restaurant?._id as string,
   );
 
+  const activeOrders = orders?.filter((order) => order.status !== "delivered");
+
   return (
     <div className="min-h-screen px-4 py-10 md:p-10">
       <Tabs defaultValue="orders">
@@ -33,30 +35,27 @@ function MyRestaurantPage() {
         </TabsList>
         <TabsContent
           value="orders"
-          className="flex items-center justify-center"
+          className="flex-col items-center justify-center"
         >
-          {orders?.length === 0 && !isGetOrdersLoading && (
-            <div className="flex min-h-screen items-center justify-center">
-              <h1 className="text-lg font-semibold">No active orders!</h1>
+          {isGetOrdersLoading && <Loader />}
+          {activeOrders?.length === 0 && !isGetOrdersLoading && (
+            <div className="flex items-center justify-center px-3 py-5 md:px-20 md:py-10">
+              <h1 className="text-lg font-bold"> No active orders found!</h1>
             </div>
           )}
 
-          {isGetOrdersLoading ? (
-            <Loader />
-          ) : (
-            <div className="my-5 w-full space-y-10 rounded-lg bg-gray-50 px-4 py-10 md:p-10">
-              <h1 className="text-lg font-semibold">
-                Active Orders : {orders?.length}
-              </h1>
-              {orders?.map((order) => (
-                <OrderItemCard
-                  key={order._id}
-                  order={order}
-                  userId={userId as string}
-                />
-              ))}
-            </div>
-          )}
+          <div className="my-5 w-full space-y-10 rounded-lg bg-gray-50 px-4 py-10 md:p-10">
+            <h1 className="text-lg font-semibold">
+              Active orders : {activeOrders?.length}
+            </h1>
+            {activeOrders?.map((order) => (
+              <OrderItemCard
+                key={order._id}
+                order={order}
+                userId={userId as string}
+              />
+            ))}
+          </div>
         </TabsContent>
         <TabsContent value="manage-restaurant">
           <div className="mx-auto flex min-h-screen justify-center">

@@ -16,8 +16,9 @@ export const GET = async (
     const selectedCuisines =
       request.nextUrl.searchParams.get("selectedCuisines") || "";
     const page = Number(request.nextUrl.searchParams.get("page")) || 1;
-    const pageSize = 10;
-    const skip = (page - 1) * pageSize;
+
+    // const pageSize = 5;
+    // const skip = (page - 1) * pageSize;
 
     const query: any = {};
 
@@ -59,8 +60,8 @@ export const GET = async (
     // Fetch restaurants with pagination and sorting
     const restaurant = await RestaurantModel.find(query)
       .sort({ [sortOption]: 1 })
-      .skip(skip)
-      .limit(pageSize)
+      // .skip(skip)
+      // .limit(pageSize)
       .lean();
 
     // Get total number of documents for pagination
@@ -79,9 +80,9 @@ export const GET = async (
       success: true,
       data: restaurant,
       pagination: {
-        page,
+        // page,
         totalDocuments,
-        pages: Math.ceil(totalDocuments / pageSize),
+        // pages: Math.ceil(totalDocuments / pageSize),
       },
     };
 

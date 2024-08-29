@@ -119,6 +119,13 @@ export const authOptions: AuthOptions = {
       }
       return session;
     },
+
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith(baseUrl)) {
+        return url;
+      }
+      return baseUrl;
+    },
   },
 
   secret: process.env.NEXTAUTH_SECRET,

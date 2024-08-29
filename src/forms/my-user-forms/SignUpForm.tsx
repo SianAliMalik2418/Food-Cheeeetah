@@ -18,6 +18,7 @@ import Link from "next/link";
 import { useCreateMyUser } from "@/hooks/MyUserApi";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import PasswordInput from "@/components/ui/PasswordInput";
 
 const SignUpForm = () => {
   const form = useForm<SignUpSchemaType>({
@@ -78,11 +79,7 @@ const SignUpForm = () => {
               <FormItem>
                 <Label>Password</Label>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Enter password..."
-                    {...field}
-                  />
+                  <PasswordInput field={field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

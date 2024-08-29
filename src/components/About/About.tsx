@@ -1,5 +1,6 @@
 import AboutImg from "@/../../public/About image.webp";
 import Image from "next/image";
+import Link from "next/link";
 
 const About = () => {
   return (
@@ -34,9 +35,12 @@ const About = () => {
 
           <span>Interested? Let&apos;s start our partnership today!</span>
 
-          <button className="max-w-fit rounded bg-primary px-5 py-3 font-semibold text-white hover:brightness-95">
+          <Link
+            href={"/restaurant/my-restaurant"}
+            className="max-w-fit rounded bg-primary px-5 py-3 font-semibold text-white hover:brightness-95"
+          >
             Get Started
-          </button>
+          </Link>
         </div>
       </div>
     </div>

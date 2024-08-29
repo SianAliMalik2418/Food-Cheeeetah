@@ -11,7 +11,7 @@ type OrderStatusCardProps = {
 
 const OrderStatusCard = ({ order }: OrderStatusCardProps) => {
   return (
-    <div className="space-y-14 rounded-lg bg-gray-100 p-10">
+    <div className="mt-5 space-y-14 rounded-lg bg-gray-100 p-10">
       <OrderStatusHeader order={order} />
       <div className="grid gap-10 md:grid-cols-2">
         <OrderStatusDetail order={order} />

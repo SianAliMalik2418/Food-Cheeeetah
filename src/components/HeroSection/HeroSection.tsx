@@ -1,6 +1,7 @@
 import Image from "next/image";
-// import heroImg from "@/../../public/NEW_CHEETAH_EATING.png";
 import heroImg from "@/../../public/Cheetah eating.jpeg";
+import appDownloadImage from "@/../../public/appDownload.png";
+import landingImage from "@/../../public/landing.png";
 import About from "../About/About";
 
 import HeroSectionSearch from "./HeroSectionSearch";
@@ -32,6 +33,31 @@ const HeroSection = () => {
         <HeroSectionSearch />
       </div>
       <About />
+      <div className="mt-10 grid gap-5 md:grid-cols-2">
+        <Image
+          alt="About Image"
+          sizes="(max-width: 768px) 100vw, 33vw"
+          width={1000}
+          height={1000}
+          src={landingImage}
+        />
+        <div className="flex flex-col items-center justify-center gap-4 text-center">
+          <span className="text-3xl font-bold tracking-tighter">
+            Order takeaway even faster!
+          </span>
+          <span>
+            Download the Food Cheetah App for faster ordering and personalised
+            recommendations
+          </span>
+          <Image
+            alt="About Image"
+            sizes="(max-width: 768px) 100vw, 33vw"
+            width={200}
+            height={200}
+            src={appDownloadImage}
+          />
+        </div>
+      </div>
     </div>
   );
 };

@@ -152,14 +152,15 @@ export const useUpdateMyRestaurantOrderStatus = () => {
     orderStatus,
   }: updateMyRestaurantOrderRequestType) => {
     try {
-      const response = await axios.patch(
+      const response = await axios.put(
         `/api/my-restaurant/order/status?orderId=${orderId}&userId=${userId}`,
-        orderStatus,
+        { status: orderStatus },
       );
 
       console.log(response);
     } catch (error) {
       console.log(error);
+      throw new Error();
     }
   };
 

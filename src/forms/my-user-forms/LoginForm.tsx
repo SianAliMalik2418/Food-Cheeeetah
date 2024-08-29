@@ -19,10 +19,13 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useMutation } from "react-query";
+import PasswordInput from "@/components/ui/PasswordInput";
+import { useSearchParams } from "next/navigation";
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -41,11 +44,11 @@ const LoginForm = () => {
         redirect: false,
         email: data.email,
         password: data.password,
+        callbackUrl,
       });
 
       if (resp && resp?.status === 401) {
         return toast.error("Invalid Credentials!");
-        setIsLoading(false);
       }
 
       if (resp && resp?.status === 200) {
@@ -89,7 +92,7 @@ const LoginForm = () => {
               <FormItem>
                 <Label>Password</Label>
                 <FormControl>
-                  <Input placeholder="Enter password here..." {...field} />
+                  <PasswordInput field={field} />
                 </FormControl>
               </FormItem>
             )}

@@ -1,12 +1,14 @@
 import { connectDB } from "@/db/dbConfig";
 import { OrderModel } from "@/db/Models/OrderModel";
+import { RestaurantModel } from "@/db/Models/RestaurantModel";
 import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (request: NextRequest) => {
+export const PUT = async (request: NextRequest) => {
   const orderId = request.nextUrl.searchParams.get("orderId");
   const userId = request.nextUrl.searchParams.get("userId");
 
-  const { status } = await request.json();
+  const reqBody = await request.json();
+  console.log(request);
 
   try {
     await connectDB();
@@ -22,7 +24,10 @@ export const POST = async (request: NextRequest) => {
       );
     }
 
-    if (order.restaurant.userId !== userId) {
+    const restaurant = await RestaurantModel.findById(order.restaurant);
+
+    if (restaurant.userId.toString() !== userId) {
+      console.log(userId, restaurant.userId.toString());
       return NextResponse.json(
         { success: false, message: "User  nit found!" },
         {
@@ -31,7 +36,7 @@ export const POST = async (request: NextRequest) => {
       );
     }
 
-    order.status = status;
+    order.status = reqBody.status;
 
     await order.save();
 

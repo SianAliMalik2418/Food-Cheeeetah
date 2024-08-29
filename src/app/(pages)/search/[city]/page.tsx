@@ -86,6 +86,7 @@ const SearchPage = ({ params }: { params: { city: string } }) => {
             onSubmit={handleSearchPageSubmit}
             placeHolder="Search by restaurant name or cuisine."
             onReset={handleSearchPageReset}
+            isLoading={isLoading}
           />
         </div>
 

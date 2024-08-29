@@ -25,12 +25,17 @@ const OrderItemCard = ({ order, userId }: OrderItemCardProps) => {
   const getTime = () => {
     const orderDateTime = new Date(order.createdAt);
 
-    const hours = orderDateTime.getHours();
+    let hours = orderDateTime.getHours();
     const minutes = orderDateTime.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+
+    // Convert 24-hour time to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
 
     const paddedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
-    return `${hours}:${paddedMinutes}`;
+    return `${hours}:${paddedMinutes} ${ampm}`;
   };
 
   const [status, setStatus] = useState<OrderStatusType>(order.status);

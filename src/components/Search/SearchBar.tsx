@@ -13,9 +13,15 @@ type SearchBarProps = {
   placeHolder: string;
   onSubmit: (searchValue: SearchSchemaType) => void;
   onReset?: () => void;
+  isLoading?: boolean;
 };
 
-const SearchBar = ({ placeHolder, onSubmit, onReset }: SearchBarProps) => {
+const SearchBar = ({
+  placeHolder,
+  onSubmit,
+  onReset,
+  isLoading,
+}: SearchBarProps) => {
   const form = useForm<SearchSchemaType>({
     defaultValues: {
       searchQuery: "",
@@ -60,7 +66,7 @@ const SearchBar = ({ placeHolder, onSubmit, onReset }: SearchBarProps) => {
           {form.formState.isDirty && (
             <IoClose cursor={"pointer"} onClick={handleReset} />
           )}
-          <ButtonLoading type="submit" isLoading={false}>
+          <ButtonLoading type="submit" isLoading={isLoading}>
             Search
           </ButtonLoading>
         </div>
