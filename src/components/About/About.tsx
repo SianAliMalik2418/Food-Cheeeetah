@@ -15,6 +15,7 @@ const About = () => {
           className="object-cover"
           alt="About Image"
           sizes="(max-width: 768px) 100vw, 33vw"
+          placeholder="blur"
         />
       </div>
 

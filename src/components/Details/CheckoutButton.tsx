@@ -27,8 +27,7 @@ const CheckoutButton = ({
   isPlacingOrderLoading,
   isAuthenticated,
 }: CheckOutButtonProps) => {
-  const pathname = usePathname(); // Get the current pathname
-  const currentUrl = encodeURIComponent(pathname);
+  const pathName = usePathname();
 
   return (
     <div className="w-full">
@@ -40,7 +39,7 @@ const CheckoutButton = ({
             </Button>
           ) : (
             <Button className="w-full">
-              <Link href={`/login?callbackUrl=${currentUrl}`}>
+              <Link href={`/login?callbackurl=${pathName}`}>
                 Login to continue
               </Link>
             </Button>

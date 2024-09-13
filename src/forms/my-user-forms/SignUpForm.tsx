@@ -35,7 +35,10 @@ const SignUpForm = () => {
 
   const handleSignUp = async (data: SignUpSchemaType) => {
     const resp = await signUpUser(data);
-    router.push("/login");
+    console.log(resp);
+    if (resp) {
+      router.push("/login");
+    }
   };
 
   return (

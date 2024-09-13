@@ -30,6 +30,7 @@ const Navbar = async () => {
                   height={"100"}
                   alt="Logo"
                   className="rounded-full"
+                  placeholder="blur"
                 />
               </div>
               <span className="font-semibold text-primary lg:text-xl">
@@ -62,6 +63,7 @@ const Navbar = async () => {
                   alt="Logo"
                   className="rounded-full"
                   sizes="(max-width: 768px) 100vw, 33vw"
+                  placeholder="blur"
                 />
               </div>
               <span className="font-semibold text-primary lg:text-xl">

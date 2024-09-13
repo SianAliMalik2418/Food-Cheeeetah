@@ -25,7 +25,9 @@ import { useSearchParams } from "next/navigation";
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  console.log(searchParams);
+  const callbackUrl = searchParams.get("callbackurl") || "/";
+  console.log(callbackUrl);
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -47,14 +49,17 @@ const LoginForm = () => {
         callbackUrl,
       });
 
+      console.log(resp);
       if (resp && resp?.status === 401) {
+        setIsLoading(false);
+
         return toast.error("Invalid Credentials!");
       }
 
       if (resp && resp?.status === 200) {
         toast.success("Logged in successfully 🎊");
 
-        router.replace("/");
+        router.replace(callbackUrl);
         router.refresh();
         setIsLoading(false);
       }
@@ -80,6 +85,9 @@ const LoginForm = () => {
                 <FormControl>
                   <Input placeholder="Enter email here..." {...field} />
                 </FormControl>
+                <span className="mt-2 text-xs">
+                  Email for testing : test@gmail.com
+                </span>
                 <FormMessage />
               </FormItem>
             )}
@@ -94,6 +102,11 @@ const LoginForm = () => {
                 <FormControl>
                   <PasswordInput field={field} />
                 </FormControl>
+                <span className="mt-2 text-xs">
+                  Email for testing : testpassword
+                </span>
+
+                <FormMessage />
               </FormItem>
             )}
           />

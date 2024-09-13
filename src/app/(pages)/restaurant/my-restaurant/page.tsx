@@ -28,11 +28,19 @@ function MyRestaurantPage() {
 
   return (
     <div className="min-h-screen px-4 py-10 md:p-10">
-      <Tabs defaultValue="orders">
+      <Tabs defaultValue="manage-restaurant">
         <TabsList className="w-fit rounded-md bg-gray-100 p-1">
-          <TabsTrigger value="orders">Orders</TabsTrigger>
           <TabsTrigger value="manage-restaurant">Manage Restaurant</TabsTrigger>
+          <TabsTrigger value="orders">Orders</TabsTrigger>
         </TabsList>
+        <TabsContent value="manage-restaurant">
+          <div className="mx-auto flex min-h-screen justify-center">
+            <ManageMyRestaurantForm
+              restaurant={restaurant as RestaurantType}
+              isGetRestaurantLoading={isGetRestaurantLoading}
+            />
+          </div>
+        </TabsContent>
         <TabsContent
           value="orders"
           className="flex-col items-center justify-center"
@@ -55,14 +63,6 @@ function MyRestaurantPage() {
                 userId={userId as string}
               />
             ))}
-          </div>
-        </TabsContent>
-        <TabsContent value="manage-restaurant">
-          <div className="mx-auto flex min-h-screen justify-center">
-            <ManageMyRestaurantForm
-              restaurant={restaurant as RestaurantType}
-              isGetRestaurantLoading={isGetRestaurantLoading}
-            />
           </div>
         </TabsContent>
       </Tabs>

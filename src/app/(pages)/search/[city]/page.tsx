@@ -26,7 +26,6 @@ const SearchPage = ({ params }: { params: { city: string } }) => {
   });
 
   const { searchResults, isLoading } = useSearchRestaurants(searchState, city);
-
   const [isCuisinesFilterListExpanded, setIsCuisinesFilterListExpanded] =
     useState(false);
 
@@ -61,7 +60,7 @@ const SearchPage = ({ params }: { params: { city: string } }) => {
   if (!city) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <span>No results found for searched city.!</span>
+        <span>No results found for the searched city.!</span>
       </div>
     );
   }
@@ -69,7 +68,7 @@ const SearchPage = ({ params }: { params: { city: string } }) => {
   return (
     <div className="mx-auto flex min-h-screen flex-col items-center gap-10 px-3 py-14 lg:flex-row lg:items-start lg:px-5">
       {/* Cuisines List */}
-      <div className="static w-full md:sticky md:top-10 lg:w-[25%]">
+      <div className="static w-full md:top-10 lg:sticky lg:w-[25%]">
         <CuisinesFilter
           onCuisineChange={handleSelectedCuisines}
           selectedCuisines={searchState.selectedCuisines}
@@ -100,7 +99,7 @@ const SearchPage = ({ params }: { params: { city: string } }) => {
           searchResults?.data && (
             <div className="flex w-full flex-col items-start">
               {/* Header part */}
-              <div className="mY-3 flex w-full flex-col items-center justify-between gap-3 lg:mt-0 lg:flex-row">
+              <div className="my-3 flex w-full flex-col items-center justify-between gap-3 lg:mt-0 lg:flex-row">
                 <div className="flex items-center justify-center">
                   <span className="text-xl font-bold md:text-2xl">
                     {searchResults?.pagination.totalDocuments} restaurants found
@@ -108,7 +107,10 @@ const SearchPage = ({ params }: { params: { city: string } }) => {
                   </span>
                 </div>
 
-                <SortOptions onSortOptionSelect={handleSortOption} />
+                <SortOptions
+                  selectedSortOption={searchState.sortOption}
+                  onSortOptionSelect={handleSortOption}
+                />
               </div>
 
               <SearchResults searchResults={searchResults?.data} />
@@ -118,7 +120,12 @@ const SearchPage = ({ params }: { params: { city: string } }) => {
 
         {!searchResults?.data && !isLoading && (
           <div className="flex min-h-screen items-center justify-center">
-            <span>No results found!</span>
+            <p>
+              No results found for {city}!
+              <Link href={"/"} className="text-primary underline">
+                Change location?
+              </Link>
+            </p>
           </div>
         )}
       </div>

@@ -16,7 +16,7 @@ const HeroSectionSearch = () => {
   return (
     <>
       <SearchBar
-        placeHolder="Search by city or town."
+        placeHolder="Search by city."
         onSubmit={handleSearch}
         isLoading={isLoading}
       />

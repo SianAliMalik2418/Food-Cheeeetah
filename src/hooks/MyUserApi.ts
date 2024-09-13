@@ -16,8 +16,16 @@ export const useCreateMyUser = () => {
     try {
       const response = await axios.post(`/api/auth/signup`, user);
       return response.data;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      // Handle API errors
+      if (axios.isAxiosError(error) && error.response) {
+        // Customize the error message from the response
+        const errorMessage =
+          error.response.data.message || "Something went wrong!";
+        throw new Error(errorMessage); // Forward error for toast
+      } else {
+        throw new Error("Unknown error occurred!");
+      }
     }
   };
 
@@ -29,12 +37,14 @@ export const useCreateMyUser = () => {
     reset,
   } = useMutation(createMyUserRequest);
 
+  // Handle success toast
   if (isSuccess) {
     toast.success("User registered successfully!");
   }
 
-  if (error) {
-    toast.error(error.toString());
+  // Handle error toast
+  if (error instanceof Error) {
+    toast.error(error.message); // Now the error.message is accessible
     reset();
   }
 

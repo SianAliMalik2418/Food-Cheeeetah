@@ -11,7 +11,7 @@ const SearchResultCard = ({ restaurant }: { restaurant: RestaurantType }) => {
       href={`/details/${restaurant._id}`}
       className="flex h-[18rem] w-[20rem] cursor-pointer flex-col gap-3 rounded-lg shadow-2xl transition-all hover:scale-[1.02] xl:mt-10 xl:w-[19rem]"
     >
-      <div className="relative h-[60%] w-full overflow-hidden rounded-lg bg-indigo-600">
+      <div className="relative h-[60%] w-full overflow-hidden rounded-lg bg-zinc-400">
         <Image
           src={restaurant.coverImage || PlaceHolderRestaurantImage}
           alt="Cover Image"

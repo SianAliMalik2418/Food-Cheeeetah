@@ -24,6 +24,7 @@ const HeroSection = () => {
             alt="Image"
             fill
             priority
+            placeholder="blur"
             className="object-contain object-center"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
@@ -40,6 +41,7 @@ const HeroSection = () => {
           width={1000}
           height={1000}
           src={landingImage}
+          placeholder="blur"
         />
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <span className="text-3xl font-bold tracking-tighter">
@@ -55,6 +57,7 @@ const HeroSection = () => {
             width={200}
             height={200}
             src={appDownloadImage}
+            placeholder="blur"
           />
         </div>
       </div>
