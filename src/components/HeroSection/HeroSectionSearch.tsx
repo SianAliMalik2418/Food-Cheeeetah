@@ -20,6 +20,9 @@ const HeroSectionSearch = () => {
         onSubmit={handleSearch}
         isLoading={isLoading}
       />
+      <p className="mt-2 text-xs text-red-500">
+        *Note : Available in Lahore only right now.
+      </p>
     </>
   );
 };

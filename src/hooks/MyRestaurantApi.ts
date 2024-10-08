@@ -8,11 +8,14 @@ import {
 } from "@/types/types";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useMutation, useQuery } from "react-query";
 import { toast } from "sonner";
 
 export const useCreateMyRestaurant = () => {
   const { data: session } = useSession();
+
+  const router = useRouter();
 
   const createMyRestaurantRequest = async (
     data: RestaurantSchemaType,
@@ -34,16 +37,16 @@ export const useCreateMyRestaurant = () => {
     isSuccess,
     error,
     reset,
-  } = useMutation(createMyRestaurantRequest);
-
-  if (isSuccess) {
-    toast.success("Restaurant created successfully!");
-  }
-
-  if (error) {
-    toast.error(error.toString());
-    reset();
-  }
+  } = useMutation(createMyRestaurantRequest, {
+    onSuccess: (restaurant) => {
+      toast.success("Restaurant created successfully!");
+      router.push(`/details/${restaurant._id}`);
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.message || error.message);
+      reset();
+    },
+  });
 
   return { createMyRestaurant, isLoading };
 };

@@ -103,7 +103,7 @@ const LoginForm = () => {
                   <PasswordInput field={field} />
                 </FormControl>
                 <span className="mt-2 text-xs">
-                  Email for testing : testpassword
+                  Password for testing : testpassword
                 </span>
 
                 <FormMessage />
